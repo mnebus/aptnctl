@@ -5,7 +5,7 @@ class Aptnctl < Formula
   url "https://github.com/mnebus/aptnctl/archive/v#{version}.tar.gz"
   sha256 "auto" # Homebrew computes this from the tarball
 
-  depends_on "microk8s" => :recommended
+  depends_on "ubuntu/microk8s/microk8s" => :recommended
 
   def install
     bin.install "aptnctl"
