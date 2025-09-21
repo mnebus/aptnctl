@@ -1,7 +1,7 @@
 class Aptnctl < Formula
   desc "Thin wrapper over MicroK8s for local Kubernetes management"
   homepage "https://github.com/mnebus/aptnctl"
-  version "0.1.0"
+  version "0.1.1"
   url "https://github.com/mnebus/aptnctl/archive/v#{version}.tar.gz"
   sha256 "auto" # Homebrew computes this from the tarball
 
