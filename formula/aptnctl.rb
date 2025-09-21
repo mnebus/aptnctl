@@ -5,10 +5,21 @@ class Aptnctl < Formula
   url "https://github.com/mnebus/aptnctl/archive/v#{version}.tar.gz"
   sha256 "auto" # Homebrew computes this from the tarball
 
+  # Explicitly depend on the Ubuntu MicroK8s formula from their tap
   depends_on "ubuntu/microk8s/microk8s" => :recommended
 
   def install
     bin.install "aptnctl"
+  end
+
+  def caveats
+    <<~EOS
+      To use aptnctl, ensure MicroK8s is installed and ready:
+        brew install ubuntu/microk8s/microk8s
+        microk8s install
+
+      Then try: aptnctl start
+    EOS
   end
 
   test do
