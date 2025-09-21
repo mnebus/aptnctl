@@ -1,0 +1,35 @@
+#!/bin/bash
+set -euo pipefail
+
+# aptnctl: A thin wrapper around MicroK8s for local Kubernetes management
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 {start|stop|logs|get}"
+  exit 1
+fi
+
+CMD=$1
+shift
+
+case $CMD in
+  start)
+    microk8s status --wait-ready >/dev/null || microk8s start
+    echo "Cluster is up. Enabling DNS and Ingress..."
+    microk8s enable dns ingress
+    echo "Ready! Try 'aptnctl get pods' or access via http://<service>.127.0.0.1.nip.io"
+    ;;
+  stop)
+    microk8s stop
+    echo "Cluster stopped."
+    ;;
+  logs)
+    microk8s kubectl logs "$@" --context=microk8s
+    ;;
+  get)
+    microk8s kubectl get "$@" --context=microk8s
+    ;;
+  *)
+    echo "Unknown command. Usage: $0 {start|stop|logs|get}"
+    exit 1
+    ;;
+esac
